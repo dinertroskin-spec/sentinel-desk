@@ -1,0 +1,8 @@
+203.0.113.77 - - [20/Oct/2026:09:07:00 +0000] "GET /.env HTTP/1.1" 404 153 "-" "synthetic-agent"
+203.0.113.77 - - [20/Oct/2026:09:07:07 +0000] "GET /wp-admin HTTP/1.1" 404 153 "-" "synthetic-agent"
+203.0.113.77 - - [20/Oct/2026:09:07:14 +0000] "GET /.git/config HTTP/1.1" 404 153 "-" "synthetic-agent"
+203.0.113.77 - - [20/Oct/2026:09:07:21 +0000] "GET /admin HTTP/1.1" 404 153 "-" "synthetic-agent"
+203.0.113.77 - - [20/Oct/2026:09:07:28 +0000] "GET /backup.zip HTTP/1.1" 404 153 "-" "synthetic-agent"
+203.0.113.77 - - [20/Oct/2026:09:07:35 +0000] "GET /config HTTP/1.1" 404 153 "-" "synthetic-agent"
+203.0.113.77 - - [20/Oct/2026:09:07:42 +0000] "GET /actuator HTTP/1.1" 404 153 "-" "synthetic-agent"
+203.0.113.77 - - [20/Oct/2026:09:07:49 +0000] "GET /phpinfo.php HTTP/1.1" 404 153 "-" "synthetic-agent"
