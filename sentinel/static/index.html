@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Sentinel Desk — локальный рабочий стол аналитика SOC: логи, детектирование и расследование инцидентов.">
+  <title>Sentinel Desk · Security operations</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="Sentinel Desk — главная"><span class="brand-mark">S<span>·</span></span><span>SENTINEL<span class="brand-sub">DESK / SOC WORKBENCH</span></span></a>
+    <div class="workspace"><span class="workspace-icon">L</span><div>Local workspace<small>Локальная среда анализа</small></div><span class="tiny-dot"></span></div>
+    <p class="nav-label">РАБОЧЕЕ ПРОСТРАНСТВО</p>
+    <nav aria-label="Основная навигация">
+      <button class="nav-item active" data-view="overview"><span class="nav-icon">◫</span>Обзор<span class="nav-shortcut">01</span></button>
+      <button class="nav-item" data-view="incidents"><span class="nav-icon">◎</span>Инциденты<span id="nav-count" class="nav-badge">0</span></button>
+      <button class="nav-item" data-view="events"><span class="nav-icon">≋</span>Журнал событий</button>
+      <button class="nav-item" data-view="rules"><span class="nav-icon">◇</span>Правила детекции</button>
+    </nav>
+    <div class="sidebar-bottom"><div class="local-status"><span class="tiny-dot"></span> Данные остаются локально</div><p>Python · SQLite · Vanilla JS</p><div class="profile"><span class="avatar">SD</span><div>Security analyst<small>Учебная лаборатория · v1.0</small></div></div></div>
+  </aside>
+  <main>
+    <header class="topbar"><div class="breadcrumb">Рабочее пространство <span>/</span> <strong id="breadcrumb">Обзор</strong></div><div class="topbar-right"><span class="local-pill"><span class="tiny-dot"></span> LOCAL</span><span class="utc">Время событий: UTC</span></div></header>
+    <div class="content">
+      <div class="page-heading"><div><div class="eyebrow">SECURITY OPERATIONS / <span id="view-number">01</span></div><h1 id="page-title">Ситуация под контролем.</h1><p id="page-description">От первого сигнала до решения — всё в одном рабочем пространстве.</p></div><button id="import-open" class="button primary"><span>＋</span> Импорт логов</button></div>
+      <div id="notice" class="notice" role="status" hidden></div>
+      <section id="empty-state" class="empty-state" hidden><span class="empty-symbol">◇</span><h2>Начните с первого сигнала</h2><p>Загрузите свои логи или исследуйте готовый сценарий: подбор SSH-пароля, сканирование путей и всплеск ошибок сервиса.</p><button class="button primary" id="demo-load">Загрузить демо-сценарий <span>↗</span></button><small>Синтетические данные · Без внешних подключений</small></section>
+      <section id="overview-view" class="view">
+        <div class="metrics">
+          <article class="metric"><div class="metric-label">СОБЫТИЯ <span>≋</span></div><div id="metric-events" class="metric-number">0</div><div class="metric-note">Нормализовано и сохранено</div></article>
+          <article class="metric"><div class="metric-label">ОТКРЫТЫЕ ИНЦИДЕНТЫ <span>◎</span></div><div id="metric-open" class="metric-number">0</div><div class="metric-note"><span class="dot amber"></span>Требуют решения аналитика</div></article>
+          <article class="metric critical-metric"><div class="metric-label">КРИТИЧЕСКИЕ <span>↗</span></div><div id="metric-critical" class="metric-number">0</div><div class="metric-note"><span class="dot red"></span>Приоритетная проверка</div></article>
+          <article class="metric"><div class="metric-label">ПРАВИЛА ДЕТЕКЦИИ <span>◇</span></div><div class="metric-number">5<span class="metric-unit"> / 5</span></div><div class="metric-note"><span class="dot green"></span>Выполняются при импорте</div></article>
+        </div>
+        <div class="overview-grid">
+          <section class="panel activity-panel"><div class="panel-heading"><div><h2>Активность событий</h2><p>Распределение последних 200 событий</p></div><span class="quiet-tag">EVENT TIME / UTC</span></div><div class="chart-legend"><span><i class="legend-dot normal"></i>Обычные события</span><span><i class="legend-dot suspicious"></i>События в инцидентах</span></div><div id="chart" class="chart" aria-label="График количества событий по времени"></div><div class="chart-footer"><span id="time-range">Нет данных</span><span>12 временных интервалов</span></div></section>
+          <section class="panel posture-panel"><div class="panel-heading"><div><h2>Очередь расследований</h2><p>Открытые инциденты по приоритету</p></div><span class="small-icon">◎</span></div><div class="posture-total"><span id="queue-total">0</span><span>инцидентов<br>ожидают решения</span></div><div id="severity-bars"></div><div class="panel-footnote">Сигнал — повод проверить контекст.<br>Решение остаётся за аналитиком.</div></section>
+        </div>
+      </section>
+      <section id="incident-section" class="panel incident-panel">
+        <div class="panel-heading"><div><h2>Инциденты <span id="incident-total" class="count-tag">0</span></h2><p>Проверьте доказательства, зафиксируйте решение</p></div><a href="/api/export" class="button secondary" download>↓ Экспорт отчёта</a></div>
+        <div class="table-toolbar"><div class="tabs" aria-label="Фильтр по статусу"><button class="tab active" data-filter="all">Все</button><button class="tab" data-filter="open">Открытые</button><button class="tab" data-filter="resolved">Закрытые</button></div><label class="search"><span>⌕</span><input id="incident-search" type="search" aria-label="Поиск инцидентов" placeholder="Поиск по IP, правилу…"></label></div>
+        <div class="table-scroll"><table><thead><tr><th>ПРИОРИТЕТ</th><th>ИНЦИДЕНТ / ПРАВИЛО</th><th>ИСТОЧНИК / ОБЪЕКТ</th><th>СОБЫТИЯ</th><th>СТАТУС</th><th></th></tr></thead><tbody id="incident-rows"></tbody></table></div><div id="no-incidents" class="table-empty" hidden>По этим условиям инцидентов нет.</div><div class="table-footer"><span id="table-count">0 инцидентов</span><span>Детекции по времени событий · История решений сохраняется</span></div>
+      </section>
+      <section id="events-view" class="view panel" hidden><div class="panel-heading"><div><h2>Журнал событий</h2><p>Последние 200 нормализованных событий · время UTC</p></div><span class="quiet-tag">READ ONLY</span></div><div class="table-scroll"><table><thead><tr><th>ВРЕМЯ UTC</th><th>ТИП</th><th>IP</th><th>ПОЛЬЗОВАТЕЛЬ / ПУТЬ</th><th>СЕРВИС</th><th>HTTP</th></tr></thead><tbody id="event-rows"></tbody></table></div></section>
+      <section id="rules-view" class="view" hidden><div id="rule-cards" class="rule-cards"></div></section>
+      <footer class="footer"><span><span class="footer-mark">S·</span> SENTINEL DESK</span><span>Наблюдать. Проверять. Реагировать.</span><span>PORTFOLIO PROJECT / 2026</span></footer>
+    </div>
+  </main>
+  <dialog id="detail-dialog" class="detail-dialog"><div class="dialog-top"><span class="eyebrow">INCIDENT INVESTIGATION</span><button class="icon-button" data-close="detail-dialog" aria-label="Закрыть">×</button></div><div id="detail-content"></div></dialog>
+  <dialog id="import-dialog"><div class="dialog-top"><span class="eyebrow">DATA INGESTION</span><button class="icon-button" data-close="import-dialog" aria-label="Закрыть">×</button></div><h2>Импорт логов</h2><p class="dialog-description">SSH с ISO-датой, nginx access log или нормализованный JSONL. Максимум 2 МиБ на запрос.</p><form id="import-form"><div class="form-grid"><label>Формат<select id="import-format"><option value="ssh">SSH / ISO 8601</option><option value="nginx">nginx access log</option><option value="jsonl">JSONL</option></select></label><label>Идентификатор источника<input id="import-source" required maxlength="100" placeholder="Например, prod-ssh-01"></label></div><label class="file-label">Файл в кодировке UTF-8<input id="import-file" type="file" accept=".log,.txt,.jsonl,.json"></label><label>Или вставьте содержимое<textarea id="import-text" rows="8" placeholder="2026-10-20T09:00:00+00:00 host sshd[42]: Failed password for root from 203.0.113.42 port 22 ssh2"></textarea></label><p class="form-hint">Повторный импорт с тем же идентификатором источника не создаёт дубликаты. Некорректные строки пропускаются с указанием причин.</p><p id="import-error" class="form-error" role="alert"></p><button class="button primary" id="import-submit" type="submit">Импортировать и проверить</button></form></dialog>
+</body>
+</html>
