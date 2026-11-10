@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sentinel-desk"
+version = "1.0.0"
+description = "Local SOC workbench for SSH and web log investigation"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [{name = "Diner Troshkin"}]
+dependencies = []
+
+[project.scripts]
+sentinel-desk = "sentinel.__main__:main"
+
+[tool.setuptools.package-data]
+sentinel = ["static/*"]
+
+[tool.setuptools.packages.find]
+include = ["sentinel*"]
